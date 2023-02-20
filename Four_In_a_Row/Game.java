@@ -1,26 +1,20 @@
-import java.util.Scanner;
 
 public class Game 
 {
-    private Scanner scan = new Scanner(System.in);
     private Board board;
-    private Player player1; // player 1 is Red
-    private Player player2; //Player 2 is Yellow
-    private int playerNum = 2;
-
+    private int playerNum = 2; //player 1 is red, player 2 is yellow
 
     public void play()
     {
         board = new Board();
-        player1 = new Player(1);
-        player2 = new Player(2);
 
         System.out.println(board);
         System.out.println("Player 1 = Red");
-        System.out.println("PLayer 2 = Yellow" + "\n");
+        System.out.println("Player 2 = Yellow" + "\n");
+
         while (!board.checkWin())
         {       
-            if (playerNum == 1)
+            if (playerNum == 1) //if it was player1's turn, it's now player2's turn
             {
                 playerNum++;
                 System.out.println("Player 2 Turn");
@@ -32,9 +26,21 @@ public class Game
             }
 
             board.placeTile(playerNum);
-            System.out.println(board);          
-        }
+            System.out.println(board); 
+            
+            if (board.isTie())
+            {
+                break;
+            }         
+        }  
 
-        System.out.println("Player " + playerNum + " Won!");
+        if (board.isTie())
+        {
+            System.out.println("Tie Game!");
+        }
+        else
+        {
+            System.out.println("Player " + playerNum + " Won!");
+        }    
     }
 }

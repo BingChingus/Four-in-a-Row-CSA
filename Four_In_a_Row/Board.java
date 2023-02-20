@@ -8,11 +8,12 @@ public class Board
 
     public Board()
     {
+        //loops traverse board and populate it with "empty" tiles
         for (int i = 0; i < board.length; i++)
         {
             for (int j = 0; j < board[0].length; j++)
             {
-                if (j == 7)
+                if (j == 7) //if the index is at the last column, don't add a space
                 {
                     board[i][j] = "|";
                 }
@@ -24,13 +25,15 @@ public class Board
         }
     }
 
+    /*checkWin method traverses board and uses different algorithms 
+      in order to determine if there's 4 in a row*/
     public boolean checkWin()
     {
         for (int i = 0; i < board.length; i++)
         {
             for (int j = 0; j < board[0].length; j++)
             {
-                if (!(board[i][j].equals("| ") || board[i][j].equals("|")))
+                if (!(board[i][j].equals("| ") || board[i][j].equals("|"))) //if the tile isn't "empty"
                 {
                     //for loop checks if there is 4 in a row horizontally
                     for (int rowWin = j; rowWin < j + 4 && rowWin < board[0].length; rowWin++)
@@ -75,8 +78,9 @@ public class Board
                             }
                         }
                     }
-                    //end major diag win check
+                    //end major diagonal win check
 
+                    //if + loop checks if there is 4 in a row diagonally (minor)
                     if (i < board.length - 3 && j > board[0].length - 6)
                     {
                         for (int diag = 0; diag < 4; diag++)
@@ -91,12 +95,31 @@ public class Board
                             }
                         }
                     }
+                    //end major diagonal win check
                 }
             }
         }
         return false;
     }
 
+    public boolean isTie()
+    {
+        for (String[] row : board)
+        {
+            for (String s : row)
+            {
+                if (s.equals("| "))
+                {
+                    //System.out.println(s); //test code
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*placeTile method takes user input and places down a tile 
+      corresponding to the current player's turn*/
     public void placeTile(int player)
     {
         System.out.println("Choose column: ");
@@ -105,7 +128,8 @@ public class Board
         int row = 0;
         while (row < board.length)
         {
-            if (!board[row][col].equals("| "))
+            if (!board[row][col].equals("| ")) //if index is taken, place above the tile
+                                                        //(doesn't count the end "|" (col 7) marker since the player should only choose columns 0-6)
             {
                 if (player == 1)
                 {
@@ -118,7 +142,7 @@ public class Board
                     break; 
                 }
             }
-            else if (row == 5)
+            else if (row == 5) //if index is at the bottom, place at the bottom
             {
                 if (player == 1)
                 {
@@ -136,17 +160,18 @@ public class Board
         }
     }
 
+    //toString method provides current board state + a few extra details
     public String toString()
     {
         String boardString = " 0 1 2 3 4 5 6 \n";
         for (String[] row : board)
-       {
-        for (String s : row)
         {
-            boardString += s;
+            for (String s : row)
+            {
+                boardString += s;
+            }
+            boardString += "\n";
         }
-        boardString += "\n";
-       }
        boardString += "---------------";
 
         return boardString;
