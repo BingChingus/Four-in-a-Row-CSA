@@ -125,6 +125,7 @@ public class Board
         System.out.println("Choose column: ");
         col = scan.nextInt();
 
+        //loops until user makes a valid input
         while (!validateTile(col))
         {
             System.out.println("Invalid Input, try again");
@@ -166,13 +167,14 @@ public class Board
         }
     }
 
+    //validateTile method checks if user input is within bounds
     private boolean validateTile(int col)
     {
-        if (col >= board[0].length || col < 0)
+        if (col >= board[0].length || col < 0) //if column is in bounds
         {
             return false;
         }
-        else if (!board[0][col].equals("| "))
+        else if (!board[0][col].equals("| ")) //if column is full
         {
             return false;
         }
