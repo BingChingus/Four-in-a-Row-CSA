@@ -95,7 +95,7 @@ public class Board
                             }
                         }
                     }
-                    //end major diagonal win check
+                    //end minor diagonal win check
                 }
             }
         }
@@ -124,6 +124,12 @@ public class Board
     {
         System.out.println("Choose column: ");
         col = scan.nextInt();
+
+        while (!validateTile(col))
+        {
+            System.out.println("Invalid Input, try again");
+            col = scan.nextInt();
+        }
 
         int row = 0;
         while (row < board.length)
@@ -158,6 +164,20 @@ public class Board
 
             row++;
         }
+    }
+
+    private boolean validateTile(int col)
+    {
+        if (col >= board[0].length || col < 0)
+        {
+            return false;
+        }
+        else if (!board[0][col].equals("| "))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     //toString method provides current board state + a few extra details
